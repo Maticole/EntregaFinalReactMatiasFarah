@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import CartWidget from '../cartWidget/cartWidget';
 import styles from './styles.module.css'
 // import { link } from 'react-router-dom';
@@ -17,8 +18,8 @@ const NavBar = () => {
 
     return (
         <div className={styles.navbar}>
-            <p>(Entreparentesis)</p>
-            {arrayDeCategorias.map((cat, index) => <p key={index}>{cat}</p> )}
+            <p>(Entre paréntesis)</p>
+            {arrayDeCategorias.map((cat, index) => <Link to={`/category/${cat}`} key={index}>{cat}</Link> )}
             
                     <CartWidget />
 

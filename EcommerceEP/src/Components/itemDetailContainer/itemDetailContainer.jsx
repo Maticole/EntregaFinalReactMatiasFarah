@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { db } from "../../firebase/client"
+import { getDoc, doc } from "firebase/firestore"
 
 const ItemDetailContainer = () => {
     const {id} = useParams()
@@ -7,11 +9,14 @@ const ItemDetailContainer = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/products/${id}`)
-        .then(response => response.json())
-        .then(json => {
-            setProducto(json)
-            console.log (json)
+       const productRef = doc(db, "products", id)
+       getDoc(productRef)
+     .then((snapshot) => {
+        if(snapshot.exists()){
+            setProducto({
+                id: snapshot.id, ...snapshot.data()
+            })
+        }
                 })
                 .catch(error => console.error(error))
                 .finally (() => setLoading(false)) 
